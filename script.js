@@ -14,6 +14,12 @@ var answerSection = document.getElementById("answerArea");
 var resultsCheck = document.getElementById("correctCheck")
 var startButton = document.getElementById("start");
 
+var question = document.getElementById('question')
+var answer = document.querySelector(".choice");
+// var answer2 = document.getElementById("answer2");
+// var answer3 = document.getElementById("answer3");
+// var answer4 = document.getElementById("answer4");
+
 
 // Created an array that contains 5 question objects
 // Question objects contain a question, options, and correct
@@ -45,22 +51,40 @@ var answersObject = [
     }
 ]
 
+var totalCorrect = 0
+var questionNumber = 0
 startButton.addEventListener("click", function(){
     event.preventDefault();
     // Clear out and hide jumbotron area
     jumbotron.style.display = 'none';
-    // run a function to loop through answers object
-
+    // run a function to have the quiz start asking questions
+    playQuestions()
 })
 
-// function playQuestions(something){
-    
-// }
+function playQuestions(){
+    question.textContent = answersObject[questionNumber].question
+    for(var i=0 ; i < 4 ; i++){
+        var text = document.createElement("button");
+        text.textContent = answersObject[questionNumber].options[i]
+        answer.appendChild(text)
 
+        // answerObject[questionNumber].options[i]
 
+    }
+    answer.addEventListener("click", function(){
+        jumbotron.style.display = 'block'
+    })
+}
 
-// for(i in answersObject.firstRound){
-//     var text = document.createElement("button");
-//     text.textContent = answersObject.firstRound[i]
-//     buttonSection.appendChild(text)
-// }
+// check if an answer was right function
+
+function checkCorrect(userChose) {
+    if (userChose === answer){
+        totalCorrect ++
+        resultsCheck.textContent = "That was a correct answer"
+
+    }
+    else{
+        resultsCheck.textContent = "sorry that was a wrong answer"
+    }   
+}
