@@ -16,9 +16,7 @@ var startButton = document.getElementById("start");
 
 var question = document.getElementById('question')
 var answer = document.querySelector(".choice");
-// var answer2 = document.getElementById("answer2");
-// var answer3 = document.getElementById("answer3");
-// var answer4 = document.getElementById("answer4");
+
 
 
 // Created an array that contains 5 question objects
@@ -32,7 +30,7 @@ var answersObject = [
     {
         question: "This is a different test question",
         options: ["choice one", "choice two", "choice 3","choice 4"],
-        correct: "choice one"
+        correct: "choice four"
     },
     {
         question: "This is a testier question",
@@ -62,29 +60,44 @@ startButton.addEventListener("click", function(){
 })
 
 function playQuestions(){
+    if(questionNumber < answersObject.length){
     question.textContent = answersObject[questionNumber].question
     for(var i=0 ; i < 4 ; i++){
         var text = document.createElement("button");
+        text.setAttribute('id', answersObject[questionNumber].options[i])
         text.textContent = answersObject[questionNumber].options[i]
         answer.appendChild(text)
 
         // answerObject[questionNumber].options[i]
 
     }
-    answer.addEventListener("click", function(){
+    answer.addEventListener("click", function(event){
+        element = event.target
+        if (element.matches('button')){
+            var user = element.getAttribute("id")
+            console.log(user)
+            console.log(answersObject[questionNumber].correct)
+            checkCorrect(user)
+        }
+        answer.innerHTML = ''
         jumbotron.style.display = 'block'
     })
+    }
+    else{
+        alert('Fill this step in later')
+    }
 }
 
 // check if an answer was right function
-
 function checkCorrect(userChose) {
-    if (userChose === answer){
+    if (userChose === answersObject[questionNumber].correct){
         totalCorrect ++
         resultsCheck.textContent = "That was a correct answer"
 
     }
     else{
         resultsCheck.textContent = "sorry that was a wrong answer"
-    }   
+    }
+    questionNumber++
+    console.log(totalCorrect)  
 }
