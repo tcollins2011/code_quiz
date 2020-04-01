@@ -30,12 +30,12 @@ var answersObject = [
     {
         question: "This is a different test question",
         options: ["choice one", "choice two", "choice 3","choice 4"],
-        correct: "choice four"
+        correct: "choice 4"
     },
     {
         question: "This is a testier question",
         options: ["choice one", "choice two", "choice 3","choice 4"],
-        correct: "choice four"
+        correct: "choice one"
     },
     {
         question: "This is a testatic question",
@@ -57,6 +57,8 @@ startButton.addEventListener("click", function(){
     jumbotron.style.display = 'none';
     // run a function to have the quiz start asking questions
     playQuestions()
+    // questionNumber+1
+    // console.log(questionNumber)
 })
 
 function playQuestions(){
@@ -67,26 +69,26 @@ function playQuestions(){
         text.setAttribute('id', answersObject[questionNumber].options[i])
         text.textContent = answersObject[questionNumber].options[i]
         answer.appendChild(text)
-
-        // answerObject[questionNumber].options[i]
-
     }
-    answer.addEventListener("click", function(event){
-        element = event.target
-        if (element.matches('button')){
-            var user = element.getAttribute("id")
-            console.log(user)
-            console.log(answersObject[questionNumber].correct)
-            checkCorrect(user)
-        }
-        answer.innerHTML = ''
-        jumbotron.style.display = 'block'
-    })
     }
     else{
         alert('Fill this step in later')
     }
 }
+
+answer.addEventListener("click", function(event){
+    element = event.target
+    if (element.matches('button')){
+        var user = element.getAttribute("id")
+        console.log(user)
+        console.log(answersObject[questionNumber].correct)
+        checkCorrect(user)
+    }
+    answer.innerHTML = ''
+    questionNumber++
+    playQuestions()
+
+})
 
 // check if an answer was right function
 function checkCorrect(userChose) {
@@ -98,6 +100,5 @@ function checkCorrect(userChose) {
     else{
         resultsCheck.textContent = "sorry that was a wrong answer"
     }
-    questionNumber++
-    console.log(totalCorrect)  
+    // console.log(totalCorrect)  
 }
